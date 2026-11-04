@@ -19,7 +19,7 @@ import { createDirector } from './ui/director.js';
 import { createCart } from './ui/cart.js';
 import { createProductPanel } from './ui/product.js';
 import { svgPackshot } from './ui/fallback.js';
-import { initCursor, initMagnetic, initMarquee, initMenu, initNav } from './ui/fx.js';
+import { initCursor, initMagnetic, initMarquee, initMenu, initNav, initClock } from './ui/fx.js';
 import {
   buildSouffles, buildCollection, buildPack, buildSamples, buildQuiz, buildJournal, buildWordmark,
   ringText, arabicNum,
@@ -69,6 +69,8 @@ const loader = {
   value: { p: 0 },
   target: 0,
 };
+
+gsap.set('.loader__hole', { x: window.innerWidth / 2, y: window.innerHeight / 2, scale: 0, transformOrigin: '50% 50%' });
 
 loader.paths.forEach((p) => {
   const len = p.getTotalLength();
@@ -221,6 +223,7 @@ async function boot() {
   initMarquee(getVelocity);
   initMenu(lenis, scrollTo);
   initNav(getScroll);
+  initClock(getScroll);
 
   /* ---------------------------------------------------------------------- */
   /* Ambiances par section                                                   */
@@ -233,7 +236,7 @@ async function boot() {
   lookOf = () => {
     if (section === 'souffles') {
       const s = SOUFFLES[chapterIdx];
-      return { perfume: byId(s.perfumes[0]), tint: s.tint, dust: '#ffcf7a', glyph: s.ar };
+      return { perfume: byId(s.perfumes[0]), tint: s.tint, dust: s.key === 'musc' ? '#ffe9d6' : '#ffcf7a', glyph: s.ar, smoke: { oud: 1.8, musc: 0.5, ambre: 1 }[s.key] };
     }
     if (section === 'collection') {
       const p = byId(activeId);

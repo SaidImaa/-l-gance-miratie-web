@@ -89,7 +89,7 @@ export function createProductPanel({ thumbs, cart, director, world, lenis, onClo
     if (isDesktop() && world) {
       document.body.classList.add('is-panel');
       director.override({
-        bxf: -0.24, by: 0, bz: 0, bs: 1.12, camZ: 6.3, camY: 0.2, lookY: 0,
+        bxf: -0.24, by: 0.12, bz: 0, bs: 1.0, camZ: 6.3, camY: 0.2, lookY: 0,
         text: 0, glyph: 0.6, tintMix: 0.55, visible: 1, halo: 1, dust: 1.1, smoke: 0.7,
       });
       world.setLook({ perfume: p, tint: p.liquid, dust: p.accent, glyph: p.ar });

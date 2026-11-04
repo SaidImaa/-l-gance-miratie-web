@@ -17,11 +17,11 @@ export function createStudioEnvironment(renderer) {
         varying vec3 vP;
         void main(){
           float h = vP.y;
-          vec3 bottom = vec3(0.02, 0.012, 0.008);
-          vec3 band = vec3(0.75, 0.4, 0.14);
-          vec3 top = vec3(0.05, 0.035, 0.03);
-          vec3 c = mix(bottom, band, smoothstep(-0.6, 0.0, h));
-          c = mix(c, top, smoothstep(0.0, 0.7, h));
+          vec3 bottom = vec3(0.012, 0.008, 0.006);
+          vec3 band = vec3(0.2, 0.1, 0.035);
+          vec3 top = vec3(0.03, 0.022, 0.02);
+          vec3 c = mix(bottom, band, smoothstep(-0.18, 0.0, h));
+          c = mix(c, top, smoothstep(0.0, 0.22, h));
           gl_FragColor = vec4(c, 1.0);
         }
       `,

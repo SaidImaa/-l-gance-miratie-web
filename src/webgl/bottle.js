@@ -193,7 +193,7 @@ export class Bottle {
     const edgeMat = new THREE.LineBasicMaterial({
       color: new THREE.Color('#ffe6bd'),
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.17,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });

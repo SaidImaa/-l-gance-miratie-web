@@ -54,6 +54,7 @@ export class World {
     this.enabled = true;
     this.tint = new THREE.Color('#2b1408');
     this.dustColor = new THREE.Color('#ffcf7a');
+    this.smokeMul = { v: 1 };
   }
 
   init() {
@@ -178,8 +179,9 @@ export class World {
   }
 
   /** Ambiance : couleur du jus, teinte du ciel, poussière, calligraphie. */
-  setLook({ perfume, tint, dust, glyph }, { spin = true } = {}) {
+  setLook({ perfume, tint, dust, glyph, smoke = 1 }, { spin = true } = {}) {
     if (perfume) this.bottle.setPerfume(perfume, { spin });
+    gsap.to(this.smokeMul, { v: smoke, duration: 1.6, ease: 'power2.inOut', overwrite: true });
     if (glyph !== undefined && glyph !== this.glyph.text && glyph !== this.pendingGlyph) {
       this.pendingGlyph = glyph;
       gsap.to(this.glyphFade, {
@@ -256,7 +258,7 @@ export class World {
 
     // fumée
     this.smoke.group.position.set(bx * 0.9, by - 0.6, cur.bz);
-    this.smoke.set(t, cur.smoke);
+    this.smoke.set(t, cur.smoke * this.smokeMul.v);
 
     // poussière d'or
     this.dust.uniforms.uTime.value = t;
@@ -274,7 +276,7 @@ export class World {
 
     // calligraphie derrière le flacon
     const gz = -2.4;
-    const gw = 2.5 * cur.bs * mobileScale;
+    const gw = 3.3 * cur.bs * mobileScale;
     const gx = (bx * (cur.camZ - gz)) / Math.max(0.1, dist);
     this.glyph.mesh.position.set(gx, by + 0.25, gz);
     this.glyph.mesh.scale.set(gw, gw, 1);

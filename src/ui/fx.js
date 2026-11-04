@@ -141,3 +141,24 @@ export function initNav(getScroll) {
     }
   });
 }
+
+/** Horloge du voyage : la nuit avance avec le scroll, du crépuscule à l'aube. */
+export function initClock(getScroll) {
+  const el = document.querySelector('[data-clock]');
+  if (!el) return;
+  const time = el.querySelector('[data-clock-time]');
+  const label = el.querySelector('[data-clock-label]');
+  const start = 18 * 60 + 40; // 18:40
+  const span = 11 * 60 + 40; // jusqu'à 06:20
+  let last = -1;
+  gsap.ticker.add(() => {
+    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const p = Math.min(1, Math.max(0, getScroll() / max));
+    el.classList.toggle('is-visible', getScroll() > window.innerHeight * 0.6);
+    const m = Math.round(start + p * span) % (24 * 60);
+    if (m === last) return;
+    last = m;
+    time.textContent = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+    label.textContent = p < 0.18 ? 'Crépuscule' : p < 0.86 ? 'Nuit' : 'Aube';
+  });
+}
