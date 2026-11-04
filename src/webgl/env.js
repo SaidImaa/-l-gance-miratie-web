@@ -58,7 +58,7 @@ export function createStudioEnvironment(renderer) {
   strip(1.2, 10, '#ffb36b', 2, new THREE.Vector3(-4, 1, -7));
   // plafonnier + boîte à lumière frontale haute (reflets du dôme d'or)
   strip(6, 3, '#fff0d6', 3.5, new THREE.Vector3(0, 9, 0));
-  strip(5, 1.4, '#ffe6c0', 4, new THREE.Vector3(1.5, 5, 7));
+  strip(5, 1.4, '#ffe6c0', 2.2, new THREE.Vector3(1.5, 5, 7));
   // reflet de sol chaud
   strip(14, 4, '#7a3c14', 1.2, new THREE.Vector3(0, -6, 2));
 
