@@ -276,7 +276,8 @@ export class World {
 
     // calligraphie derrière le flacon
     const gz = -2.4;
-    const gw = 3.3 * cur.bs * mobileScale;
+    const long = (this.glyph.text || '').length > 6 ? 0.7 : 1;
+    const gw = 3.3 * cur.bs * mobileScale * long;
     const gx = (bx * (cur.camZ - gz)) / Math.max(0.1, dist);
     this.glyph.mesh.position.set(gx, by + 0.25, gz);
     this.glyph.mesh.scale.set(gw, gw, 1);
