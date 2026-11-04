@@ -50,12 +50,12 @@ export function createStudioEnvironment(renderer) {
     scene.add(mesh);
   };
   // key gauche, long et chaud
-  strip(2.4, 14, '#ffe2b8', 4.5, new THREE.Vector3(-7, 1, 4));
+  strip(2.4, 14, '#ffe2b8', 2.8, new THREE.Vector3(-7, 1, 4));
   // fill droite
-  strip(1.8, 12, '#ffd29a', 3, new THREE.Vector3(7, 0.5, 3));
+  strip(1.8, 12, '#ffd29a', 1.9, new THREE.Vector3(7, 0.5, 3));
   // contre-jour ambré
-  strip(10, 1.2, '#ff9a4a', 5, new THREE.Vector3(0, 2.5, -8));
-  strip(1.2, 10, '#ffb36b', 3.5, new THREE.Vector3(-4, 1, -7));
+  strip(10, 1.2, '#ff9a4a', 3.2, new THREE.Vector3(0, 2.5, -8));
+  strip(1.2, 10, '#ffb36b', 2, new THREE.Vector3(-4, 1, -7));
   // plafonnier + boîte à lumière frontale haute (reflets du dôme d'or)
   strip(6, 3, '#fff0d6', 3.5, new THREE.Vector3(0, 9, 0));
   strip(5, 1.4, '#ffe6c0', 4, new THREE.Vector3(1.5, 5, 7));

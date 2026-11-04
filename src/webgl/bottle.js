@@ -129,7 +129,7 @@ function makeMaterials(envIntensity = 1) {
     color: new THREE.Color('#e2b66a'),
     metalness: 1,
     roughness: 0.26,
-    envMapIntensity: 1.5 * envIntensity,
+    envMapIntensity: 2.1 * envIntensity,
     flatShading: true,
   });
   return { glass, liquid, gold };
