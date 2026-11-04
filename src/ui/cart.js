@@ -8,7 +8,15 @@ const read = () => {
   try {
     const raw = localStorage.getItem(KEY);
     const data = raw ? JSON.parse(raw) : [];
-    return Array.isArray(data) ? data : [];
+    if (!Array.isArray(data)) return [];
+    return data.filter(
+      (it) =>
+        it &&
+        typeof it === 'object' &&
+        Number.isFinite(it.qty) &&
+        it.qty > 0 &&
+        (it.type === 'pack' ? Array.isArray(it.ids) && it.ids.length === 3 : typeof it.id === 'string' && typeof it.format === 'string')
+    );
   } catch {
     return [];
   }
@@ -92,6 +100,7 @@ export function createCart({ thumbs, lenis }) {
   list.addEventListener('click', (e) => {
     const t = e.target.closest('button');
     if (!t) return;
+    const key = t.dataset.inc ? `[data-inc="${t.dataset.inc}"]` : t.dataset.dec ? `[data-dec="${t.dataset.dec}"]` : null;
     if (t.dataset.inc) items[+t.dataset.inc].qty++;
     if (t.dataset.dec) {
       const it = items[+t.dataset.dec];
@@ -100,6 +109,8 @@ export function createCart({ thumbs, lenis }) {
     }
     if (t.dataset.rm) items.splice(+t.dataset.rm, 1);
     save();
+    // le panier est reconstruit : on rend le focus au même bouton (clavier)
+    (key && list.querySelector(key))?.focus({ preventScroll: true }) || sheet.focus({ preventScroll: true });
   });
 
   function add(id, format = '2ml', { silent = false } = {}) {
@@ -121,6 +132,7 @@ export function createCart({ thumbs, lenis }) {
   function show() {
     if (open) return;
     open = true;
+    gsap.killTweensOf(sheet);
     lastFocus = document.activeElement;
     root.classList.add('is-open');
     root.setAttribute('aria-hidden', 'false');
@@ -138,6 +150,7 @@ export function createCart({ thumbs, lenis }) {
       duration: 0.7,
       ease: 'expo.in',
       onComplete: () => {
+        if (open) return;
         root.classList.remove('is-open');
         root.setAttribute('aria-hidden', 'true');
       },

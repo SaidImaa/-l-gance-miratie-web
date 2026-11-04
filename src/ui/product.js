@@ -81,6 +81,7 @@ export function createProductPanel({ thumbs, cart, director, world, lenis, onClo
       return;
     }
     open = true;
+    gsap.killTweensOf(sheet);
     lastFocus = document.activeElement;
     root.classList.add('is-open');
     root.setAttribute('aria-hidden', 'false');
@@ -117,12 +118,13 @@ export function createProductPanel({ thumbs, cart, director, world, lenis, onClo
       duration: 0.8,
       ease: 'expo.in',
       onComplete: () => {
+        if (open) return;
         root.classList.remove('is-open');
         root.setAttribute('aria-hidden', 'true');
       },
     });
     if (document.body.classList.contains('is-panel')) {
-      director.release(() => document.body.classList.remove('is-panel'));
+      director.release(() => !open && document.body.classList.remove('is-panel'));
     }
     lenis?.start();
     onClose?.(current);

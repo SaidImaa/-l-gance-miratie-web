@@ -223,11 +223,14 @@ export function buildQuiz({ thumbs, cart, openProduct }) {
   const card = document.querySelector('[data-quiz]');
   let step = 0;
   let scores = {};
+  let busy = false;
 
   const progress = () =>
     `<div class="quiz__progress" aria-hidden="true">${QUIZ.map((_, i) => `<span class="${i < step ? 'is-done' : ''}"></span>`).join('')}</div>`;
 
   function swap(html) {
+    busy = true;
+    const hadFocus = card.contains(document.activeElement);
     gsap.to(card.children, {
       opacity: 0,
       y: -20,
@@ -236,6 +239,8 @@ export function buildQuiz({ thumbs, cart, openProduct }) {
       ease: 'power2.in',
       onComplete: () => {
         card.innerHTML = html;
+        busy = false;
+        if (hadFocus) card.querySelector('button')?.focus({ preventScroll: true });
         gsap.fromTo(card.children, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.07, ease: 'power3.out' });
         gsap.fromTo(card.querySelectorAll('.quiz__opt'), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.06, delay: 0.15, ease: 'power3.out' });
       },
@@ -280,6 +285,7 @@ export function buildQuiz({ thumbs, cart, openProduct }) {
   }
 
   card.addEventListener('click', (e) => {
+    if (busy) return;
     const opt = e.target.closest('[data-opt]');
     if (opt) {
       const o = QUIZ[step].options[+opt.dataset.opt];
@@ -326,7 +332,7 @@ export function buildJournal() {
   let sx = 0;
   let sl = 0;
   rail.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse') return;
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
     down = true;
     moved = 0;
     sx = e.clientX;
@@ -339,15 +345,17 @@ export function buildJournal() {
     if (moved > 4) rail.classList.add('is-dragging');
     rail.scrollLeft = sl - dx;
   });
-  window.addEventListener('pointerup', () => {
+  const end = () => {
     down = false;
     rail.classList.remove('is-dragging');
-  });
+  };
+  window.addEventListener('pointerup', end);
+  window.addEventListener('pointercancel', end);
+  window.addEventListener('blur', end);
+  rail.addEventListener('contextmenu', end);
   rail.addEventListener('click', (e) => {
-    if (moved > 6) {
-      e.preventDefault();
-      moved = 0;
-    }
+    if (e.detail && moved > 6) e.preventDefault();
+    moved = 0;
   });
 }
 
@@ -374,6 +382,7 @@ export function buildWordmark() {
   window.addEventListener('resize', fit);
   document.fonts?.ready.then(fit);
   el.addEventListener('pointermove', (e) => {
+    el.classList.add('is-live');
     chars.forEach((c) => {
       const r = c.getBoundingClientRect();
       const d = Math.abs(e.clientX - (r.left + r.width / 2));

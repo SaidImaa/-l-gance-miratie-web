@@ -156,9 +156,15 @@ async function boot() {
   // --- défilement doux
   const lenis = reduced ? null : new Lenis({ lerp: 0.085, wheelMultiplier: 0.9, smoothWheel: true });
   if (lenis) {
+    lenis.stop(); // pas de défilement tant que le loader est là
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
   }
+  // verrou de scroll commun (overlays), y compris sans défilement doux
+  const scrollLock = {
+    stop: () => (lenis ? lenis.stop() : document.documentElement.classList.add('is-locked')),
+    start: () => (lenis ? lenis.start() : document.documentElement.classList.remove('is-locked')),
+  };
   gsap.ticker.lagSmoothing(0);
   const getScroll = () => (lenis ? lenis.scroll : window.scrollY);
   const getVelocity = () => (lenis ? lenis.velocity : 0);
@@ -173,7 +179,7 @@ async function boot() {
   const chapters = buildSouffles();
   const rows = buildCollection(thumbs);
   const director = world ? createDirector(world) : { setStops() {}, update() {}, override() {}, release(cb) { cb?.(); } };
-  const cart = createCart({ thumbs, lenis });
+  const cart = createCart({ thumbs, lenis: scrollLock });
 
   let lookOf = () => null;
   const product = createProductPanel({
@@ -181,7 +187,7 @@ async function boot() {
     cart,
     director,
     world,
-    lenis,
+    lenis: scrollLock,
     isDesktop,
     onClose: () => world && applyLook(lookOf()),
   });
@@ -221,7 +227,7 @@ async function boot() {
   initCursor();
   initMagnetic();
   initMarquee(getVelocity);
-  initMenu(lenis, scrollTo);
+  initMenu(scrollLock, scrollTo);
   initNav(getScroll);
   initClock(getScroll);
 
@@ -417,14 +423,14 @@ async function boot() {
     onLeave: () => setSection('after'),
   });
 
-  gsap.utils.toArray('.row').forEach((r) =>
-    gsap.from(r, {
+  // on anime le <li> parent : la ligne garde sa propre transition d'opacité (survol)
+  gsap.utils.toArray('.collection__list > li').forEach((li) =>
+    gsap.from(li, {
       x: 80,
       opacity: 0,
       duration: 1.2,
       ease: 'expo.out',
-      clearProps: 'transform,opacity',
-      scrollTrigger: { trigger: r, start: 'top 92%', once: true },
+      scrollTrigger: { trigger: li, start: 'top 92%', once: true },
     })
   );
 
@@ -533,6 +539,7 @@ async function boot() {
     onComplete: () => {
       loader.el.remove();
       document.body.classList.remove('is-loading');
+      document.documentElement.classList.remove('is-loading');
       lenis?.start();
       ScrollTrigger.refresh();
     },
@@ -547,4 +554,9 @@ async function boot() {
   if (params.has('debug')) window.__EE = { world, director, lenis, ScrollTrigger };
 }
 
-boot();
+boot().catch((err) => {
+  console.error('[EE] Échec du démarrage', err);
+  document.querySelector('.loader')?.remove();
+  document.body.classList.remove('is-loading');
+  document.documentElement.classList.remove('is-loading');
+});

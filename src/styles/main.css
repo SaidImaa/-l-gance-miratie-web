@@ -40,7 +40,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  overflow-x: clip;
+  scrollbar-gutter: stable;
   background: var(--ink);
   scrollbar-width: thin;
   scrollbar-color: var(--gold-lo) var(--ink);
@@ -54,7 +54,7 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 .lenis.lenis-stopped {
-  overflow: clip;
+  overflow: hidden;
 }
 
 body {
@@ -71,6 +71,8 @@ body {
   overflow-x: clip;
 }
 
+html.is-loading,
+html.is-locked,
 body.is-loading {
   overflow: hidden;
 }
@@ -2549,6 +2551,9 @@ main,
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.footer__word.is-live .ch {
   transition: transform 0.9s var(--ease);
 }
 

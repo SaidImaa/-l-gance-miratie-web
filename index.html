@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="is-loading">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -65,7 +65,7 @@
 
     <!-- ============ HEADER ============ -->
     <header class="nav">
-      <a class="nav__logo" href="#top" aria-label="Elegance Emiratie — retour en haut" data-cursor="Accueil">
+      <a class="nav__logo" href="#top" data-link aria-label="Elegance Emiratie — retour en haut" data-cursor="Accueil">
         <svg class="nav__star"><use href="#star" /></svg>
         <span class="nav__wordmark"><span>Elegance</span><span>Emiratie</span></span>
       </a>
@@ -312,7 +312,7 @@
           <h2 class="display display--sm" data-split>Histoires<br /><em>d'Orient.</em></h2>
           <p class="journal__hint">Glisse pour lire <svg><use href="#arrow" /></svg></p>
         </header>
-        <div class="journal__rail" data-journal data-cursor="Glisser"></div>
+        <div class="journal__rail" data-journal data-lenis-prevent-horizontal data-cursor="Glisser"></div>
       </section>
     </main>
 
