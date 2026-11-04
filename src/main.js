@@ -51,7 +51,7 @@ const DESKTOP = {
 
 const MOBILE = {
   ...DESKTOP,
-  hero: { ...DESKTOP.hero, by: 0.25, camZ: 8.2 },
+  hero: { ...DESKTOP.hero, by: 0.45, camZ: 8.6, lookY: -0.35 },
   manifesto: { ...DESKTOP.manifesto, bxf: 0, by: 1.3, bs: 0.72, camZ: 8 },
   souffles: { ...DESKTOP.souffles, bxf: 0, by: 1.25, bs: 0.82, camZ: 7.6 },
   collection: { ...DESKTOP.collection, bxf: 0, by: 1.4, bs: 0.6, camZ: 8 },

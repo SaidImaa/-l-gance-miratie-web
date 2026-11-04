@@ -20,7 +20,7 @@ const FinalShader = {
   uniforms: {
     tDiffuse: { value: null },
     uVignette: { value: 0.55 },
-    uAberration: { value: 0.0025 },
+    uAberration: { value: 0.0012 },
   },
   vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
   fragmentShader: /* glsl */ `
@@ -235,7 +235,7 @@ export class World {
     const b = this.bottle;
     const dist = cur.camZ - cur.bz;
     const visW = this.visibleWidthAt(dist);
-    const mobileScale = this.camera.aspect < 0.8 ? 0.78 : 1;
+    const mobileScale = this.camera.aspect < 0.8 ? 0.92 : 1;
     const bx = cur.bxf * visW;
     const by = cur.by + Math.sin(t * 0.8) * 0.05;
     b.group.position.set(bx, by, cur.bz);
@@ -266,8 +266,8 @@ export class World {
 
     // typographie monumentale
     const tz = -3.2;
-    const tw = this.visibleWidthAt(cur.camZ - tz) * (cam.aspect < 0.8 ? 1.02 : 0.94);
-    this.heroText.mesh.position.set(0, (cam.aspect < 0.8 ? 0.55 : 0.12) + cur.textY, tz);
+    const tw = this.visibleWidthAt(cur.camZ - tz) * (cam.aspect < 0.8 ? 0.9 : 0.94);
+    this.heroText.mesh.position.set(0, (cam.aspect < 0.8 ? 1.15 : 0.12) + cur.textY, tz);
     this.heroText.mesh.scale.set(tw, tw, 1);
     this.heroText.material.opacity = cur.text;
     this.heroText.mesh.visible = cur.text > 0.003;

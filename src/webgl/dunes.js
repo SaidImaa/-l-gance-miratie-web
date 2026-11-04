@@ -56,7 +56,7 @@ export function createDunes({ segments = 220, size = 150 } = {}) {
     uFog: { value: new THREE.Color('#c0622a') },
     uFogNear: { value: 12 },
     uFogFar: { value: 78 },
-    uSparkle: { value: 1 },
+    uSparkle: { value: 0.55 },
     uLight: { value: 1 },
   };
 

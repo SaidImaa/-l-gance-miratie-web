@@ -36,6 +36,7 @@ export function createCart({ thumbs, lenis }) {
   const totalEl = root.querySelector('[data-cart-total]');
   const counts = document.querySelectorAll('[data-cart-count]');
   let open = false;
+  gsap.set(sheet, { xPercent: 100 });
   let lastFocus = null;
 
   const unitPrice = (it) => {

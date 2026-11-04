@@ -88,7 +88,7 @@
     </header>
 
     <!-- ============ MENU PLEIN ÉCRAN ============ -->
-    <div class="menu" id="menu" aria-hidden="true">
+    <div class="menu" id="menu" aria-hidden="true" data-lenis-prevent>
       <div class="menu__bg"></div>
       <div class="menu__inner">
         <ol class="menu__list">
@@ -125,7 +125,7 @@
           <div class="hero__intro">
             <p class="eyebrow" data-hero-in>Nouvelle ère — Collection Signature</p>
             <p class="hero__lead" data-hero-in>
-              L'Orient, <em>à fleur de peau.</em> Des parfums orientaux et des inspirations de haute parfumerie, pensés pour être portés chaque jour.
+              L'Orient, <em>à fleur de peau.</em> <span class="hero__lead-more">Des parfums orientaux et des inspirations de haute parfumerie, pensés pour être portés chaque jour.</span>
             </p>
             <div class="hero__ctas" data-hero-in>
               <a class="btn btn--gold" href="#collection" data-link data-magnetic data-cursor="Explorer">
@@ -368,7 +368,7 @@
     <!-- ============ FICHE PRODUIT ============ -->
     <div class="panel" aria-hidden="true">
       <div class="panel__backdrop" data-panel-close></div>
-      <section class="panel__sheet" role="dialog" aria-modal="true" aria-labelledby="panel-title" tabindex="-1">
+      <section class="panel__sheet" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="panel-title" tabindex="-1">
         <button class="panel__close" type="button" data-panel-close data-cursor="Fermer">Fermer <span aria-hidden="true">✕</span></button>
         <div class="panel__content" data-panel-content></div>
       </section>
@@ -377,7 +377,7 @@
     <!-- ============ PANIER ============ -->
     <div class="cart" aria-hidden="true">
       <div class="cart__backdrop" data-cart-close></div>
-      <aside class="cart__sheet" role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1">
+      <aside class="cart__sheet" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1">
         <header class="cart__head">
           <h2 id="cart-title">Ton panier</h2>
           <button type="button" class="cart__close" data-cart-close data-cursor="Fermer">Fermer <span aria-hidden="true">✕</span></button>

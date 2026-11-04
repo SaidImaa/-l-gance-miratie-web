@@ -12,6 +12,7 @@ export function createProductPanel({ thumbs, cart, director, world, lenis, onClo
   const sheet = root.querySelector('.panel__sheet');
   const content = root.querySelector('[data-panel-content]');
   let open = false;
+  gsap.set(sheet, { xPercent: 100 });
   let current = null;
   let lastFocus = null;
 
