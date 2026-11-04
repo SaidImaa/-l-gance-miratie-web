@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Elegance Emiratie — Maison de parfums orientaux</title>
+    <meta
+      name="description"
+      content="Oud, musc, ambre. Parfums orientaux et inspirations de haute parfumerie, en flacons de 15, 50 et 100 ml, et en échantillons de 2 ml dès 1,90 €."
+    />
+    <meta name="theme-color" content="#070504" />
+    <meta property="og:title" content="Elegance Emiratie — L'Orient, à fleur de peau" />
+    <meta property="og:description" content="Oud, musc, ambre : la maison de parfums orientaux." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="is-loading">
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <symbol id="star" viewBox="-50 -50 100 100">
+          <path d="M0,-48 L13.16,-31.78 L33.94,-33.94 L31.78,-13.16 L48,0 L31.78,13.16 L33.94,33.94 L13.16,31.78 L0,48 L-13.16,31.78 L-33.94,33.94 L-31.78,13.16 L-48,0 L-31.78,-13.16 L-33.94,-33.94 L-13.16,-31.78 Z" />
+        </symbol>
+        <symbol id="arrow" viewBox="0 0 24 24">
+          <path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" />
+        </symbol>
+        <symbol id="arrow-up-right" viewBox="0 0 24 24">
+          <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.4" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- ============ LOADER ============ -->
+    <div class="loader" aria-hidden="true">
+      <svg class="loader__veil">
+        <defs>
+          <mask id="veil-mask" maskUnits="userSpaceOnUse">
+            <rect width="100%" height="100%" fill="#fff" />
+            <g class="loader__hole"><use href="#star" x="-50" y="-50" width="100" height="100" fill="#000" /></g>
+          </mask>
+        </defs>
+        <rect width="100%" height="100%" fill="#070504" mask="url(#veil-mask)" />
+      </svg>
+      <div class="loader__inner">
+        <svg class="loader__star" viewBox="-60 -60 120 120">
+          <circle r="56" class="loader__circle" />
+          <path class="loader__path" d="M0,-48 L13.16,-31.78 L33.94,-33.94 L31.78,-13.16 L48,0 L31.78,13.16 L33.94,33.94 L13.16,31.78 L0,48 L-13.16,31.78 L-33.94,33.94 L-31.78,13.16 L-48,0 L-31.78,-13.16 L-33.94,-33.94 L-13.16,-31.78 Z" />
+          <path class="loader__path loader__path--inner" transform="scale(.45) rotate(22.5)" d="M0,-48 L13.16,-31.78 L33.94,-33.94 L31.78,-13.16 L48,0 L31.78,13.16 L33.94,33.94 L13.16,31.78 L0,48 L-13.16,31.78 L-33.94,33.94 L-31.78,13.16 L-48,0 L-31.78,-13.16 L-33.94,-33.94 L-13.16,-31.78 Z" />
+        </svg>
+        <p class="loader__ar" lang="ar" dir="rtl">أناقة إماراتية</p>
+        <p class="loader__brand">Elegance Emiratie</p>
+        <p class="loader__count"><span class="loader__num">000</span></p>
+        <p class="loader__hint">Le voyage olfactif commence</p>
+      </div>
+    </div>
+
+    <canvas class="webgl" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__ring"><span class="cursor__label"></span></div>
+      <div class="cursor__dot"></div>
+    </div>
+
+    <!-- ============ HEADER ============ -->
+    <header class="nav">
+      <a class="nav__logo" href="#top" aria-label="Elegance Emiratie — retour en haut" data-cursor="Accueil">
+        <svg class="nav__star"><use href="#star" /></svg>
+        <span class="nav__wordmark"><span>Elegance</span><span>Emiratie</span></span>
+      </a>
+      <nav class="nav__links" aria-label="Navigation principale">
+        <a href="#souffles" data-link>Les Souffles</a>
+        <a href="#collection" data-link>Collection</a>
+        <a href="#packs" data-link>Packs</a>
+        <a href="#echantillons" data-link>Échantillons</a>
+        <a href="#journal" data-link>Journal</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="nav__quiz" href="#quiz" data-link data-cursor="Quiz"><svg><use href="#star" /></svg>Trouver mon parfum</a>
+        <button class="nav__sound" type="button" aria-pressed="false" aria-label="Ambiance sonore" data-sound data-cursor="Son">
+          <span class="nav__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </button>
+        <button class="nav__cart" type="button" data-cart-open data-cursor="Panier">
+          Panier <span class="nav__count" data-cart-count>0</span>
+        </button>
+        <button class="nav__burger" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+          <span></span><span></span><span class="sr-only">Menu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ============ MENU PLEIN ÉCRAN ============ -->
+    <div class="menu" id="menu" aria-hidden="true">
+      <div class="menu__bg"></div>
+      <div class="menu__inner">
+        <ol class="menu__list">
+          <li><a href="#collection" data-link data-menu-close><span class="menu__num">٠١</span><span class="menu__label">Collection Signature</span><span class="menu__ar" lang="ar">التوقيع</span></a></li>
+          <li><a href="#souffles" data-link data-menu-close><span class="menu__num">٠٢</span><span class="menu__label">Oud, Musc &amp; Ambre</span><span class="menu__ar" lang="ar">عود مسك عنبر</span></a></li>
+          <li><a href="#packs" data-link data-menu-close><span class="menu__num">٠٣</span><span class="menu__label">Packs Signature</span><span class="menu__ar" lang="ar">ثلاثية</span></a></li>
+          <li><a href="#echantillons" data-link data-menu-close><span class="menu__num">٠٤</span><span class="menu__label">Échantillons</span><span class="menu__ar" lang="ar">تجربة</span></a></li>
+          <li><a href="#quiz" data-link data-menu-close><span class="menu__num">٠٥</span><span class="menu__label">Trouver mon parfum</span><span class="menu__ar" lang="ar">عطري</span></a></li>
+          <li><a href="#journal" data-link data-menu-close><span class="menu__num">٠٦</span><span class="menu__label">Le Journal</span><span class="menu__ar" lang="ar">مجلة</span></a></li>
+        </ol>
+        <div class="menu__side">
+          <p class="eyebrow">Toute la boutique</p>
+          <ul>
+            <li><a href="https://www.elegance-emiratie.com/collections/parfum-femme" target="_blank" rel="noopener">Parfums femme</a></li>
+            <li><a href="https://www.elegance-emiratie.com/collections/parfum-homme" target="_blank" rel="noopener">Parfums homme</a></li>
+            <li><a href="https://www.elegance-emiratie.com/collections/tous-nos-parfums" target="_blank" rel="noopener">Toutes les inspirations</a></li>
+            <li><a href="https://www.elegance-emiratie.com/collections/huiles-de-parfum" target="_blank" rel="noopener">Huiles de parfum</a></li>
+            <li><a href="https://www.elegance-emiratie.com/collections/parfum-ete" target="_blank" rel="noopener">Parfums d'été</a></li>
+          </ul>
+          <p class="menu__coords">25°12′N — 55°16′E</p>
+        </div>
+        <button class="menu__close" type="button" data-menu-close data-cursor="Fermer">Fermer</button>
+      </div>
+    </div>
+
+    <main id="smooth">
+      <!-- ============ HERO ============ -->
+      <section class="hero" id="top">
+        <h1 class="sr-only">Elegance Emiratie — Maison de parfums orientaux</h1>
+        <p class="hero__vertical hero__vertical--ar" lang="ar" dir="rtl">أناقة إماراتية</p>
+        <p class="hero__vertical hero__vertical--fr">Oud <i>✦</i> Musc <i>✦</i> Ambre</p>
+
+        <div class="hero__bottom">
+          <div class="hero__intro">
+            <p class="eyebrow" data-hero-in>Nouvelle ère — Collection Signature</p>
+            <p class="hero__lead" data-hero-in>
+              L'Orient, <em>à fleur de peau.</em> Des parfums orientaux et des inspirations de haute parfumerie, pensés pour être portés chaque jour.
+            </p>
+            <div class="hero__ctas" data-hero-in>
+              <a class="btn btn--gold" href="#collection" data-link data-magnetic data-cursor="Explorer">
+                <span class="btn__label">Découvrir la collection</span>
+                <svg class="btn__icon"><use href="#arrow" /></svg>
+              </a>
+              <a class="btn btn--ghost" href="#echantillons" data-link data-magnetic data-cursor="Essayer">
+                <span class="btn__label">Échantillons dès 1,90 €</span>
+              </a>
+            </div>
+          </div>
+          <div class="hero__meta" data-hero-in>
+            <p class="hero__coords">25°12′N<br />55°16′E</p>
+            <a class="hero__scroll" href="#maison" data-link data-cursor="Défiler">
+              <span class="hero__scroll-line"></span>
+              <span>Commencer le voyage</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MANIFESTE ============ -->
+      <section class="manifesto" id="maison">
+        <div class="manifesto__inner">
+          <p class="eyebrow"><svg class="eyebrow__star"><use href="#star" /></svg> La Maison</p>
+          <h2 class="display manifesto__title" data-split>
+            Il y a des parfums qu'on porte.<br /><em>Et d'autres qui racontent.</em>
+          </h2>
+          <p class="manifesto__text" data-scrub-words>
+            Chez Elegance Emiratie, chaque flacon est un voyage : la chaleur des souks, l'oud qui fume au crépuscule, le musc qui reste sur la peau bien après la nuit. Nous réinterprétons les grandes signatures de la parfumerie avec l'âme de l'Orient, pour que le luxe se porte au quotidien.
+          </p>
+          <ul class="facts">
+            <li class="fact"><span class="fact__num"><span data-count="5">0</span></span><span class="fact__label">familles olfactives<br />oriental · gourmand · boisé · fruité · floral</span></li>
+            <li class="fact"><span class="fact__num"><span data-count="2">0</span><small>ml</small></span><span class="fact__label">l'échantillon pour<br />tout essayer, à 1,90 €</span></li>
+            <li class="fact"><span class="fact__num"><span data-count="15">0</span><small>/50/100</small></span><span class="fact__label">formats en millilitres,<br />dès 14,90 €</span></li>
+            <li class="fact"><span class="fact__num">−<span data-count="34">0</span><small>%</small></span><span class="fact__label">jusqu'à, sur les<br />Packs Signature</span></li>
+          </ul>
+        </div>
+        <p class="manifesto__ghost" lang="ar" aria-hidden="true">عطر</p>
+      </section>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track" data-marquee>
+          <span>Oud</span><svg><use href="#star" /></svg><span>Musc</span><svg><use href="#star" /></svg><span>Ambre</span><svg><use href="#star" /></svg><span>Safran</span><svg><use href="#star" /></svg><span>Santal</span><svg><use href="#star" /></svg><span>Vanille</span><svg><use href="#star" /></svg><span>Encens</span><svg><use href="#star" /></svg><span>Rose</span><svg><use href="#star" /></svg><span>Tonka</span><svg><use href="#star" /></svg><span>Benjoin</span><svg><use href="#star" /></svg>
+        </div>
+      </div>
+
+      <!-- ============ LES TROIS SOUFFLES ============ -->
+      <section class="souffles" id="souffles">
+        <div class="souffles__pin">
+          <header class="souffles__head">
+            <p class="eyebrow"><svg class="eyebrow__star"><use href="#star" /></svg> Les trois souffles de l'Orient</p>
+            <p class="souffles__counter" dir="ltr"><span data-souffle-num>٠١</span> <i>/</i> ٠٣</p>
+          </header>
+          <div class="souffles__chapters" data-chapters></div>
+          <nav class="souffles__progress" aria-hidden="true">
+            <span class="souffles__bar"><span data-souffle-bar></span></span>
+            <ol data-souffle-dots></ol>
+          </nav>
+        </div>
+      </section>
+
+      <!-- ============ COLLECTION ============ -->
+      <section class="collection" id="collection">
+        <header class="collection__head">
+          <p class="eyebrow"><svg class="eyebrow__star"><use href="#star" /></svg> La Collection Signature</p>
+          <h2 class="display" data-split>Huit sillages,<br /><em>une seule âme.</em></h2>
+          <p class="collection__intro">
+            Une sélection de nos créations signature. Survole un parfum pour le révéler, ouvre-le pour plonger dans sa pyramide olfactive.
+          </p>
+        </header>
+        <div class="collection__grid">
+          <div class="collection__stage" aria-hidden="true">
+            <div class="stage">
+              <p class="stage__ar" lang="ar" dir="rtl" data-stage-ar>عود لا ينتهي</p>
+              <svg class="stage__ring" viewBox="0 0 600 600">
+                <defs><path id="ring-path" d="M300,300 m-262,0 a262,262 0 1,1 524,0 a262,262 0 1,1 -524,0" /></defs>
+                <circle cx="300" cy="300" r="290" class="stage__circle" />
+                <circle cx="300" cy="300" r="236" class="stage__circle stage__circle--dash" />
+                <text><textPath href="#ring-path" data-stage-ring>LAVANDE ✦ SAFRAN ✦ OUD ✦ MUSC ✦ </textPath></text>
+              </svg>
+              <p class="stage__family" data-stage-family>Oriental aromatique</p>
+            </div>
+          </div>
+          <ol class="collection__list" data-collection></ol>
+        </div>
+        <div class="collection__more">
+          <a class="btn btn--ghost" href="https://www.elegance-emiratie.com/collections/parfums-elegance-emiratie" target="_blank" rel="noopener" data-magnetic data-cursor="Boutique">
+            <span class="btn__label">Voir toutes les créations signature</span>
+            <svg class="btn__icon"><use href="#arrow-up-right" /></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============ PACK SIGNATURE ============ -->
+      <section class="pack" id="packs">
+        <div class="pack__bg" aria-hidden="true"></div>
+        <header class="pack__head">
+          <p class="eyebrow"><svg class="eyebrow__star"><use href="#star" /></svg> Packs Signature</p>
+          <h2 class="display" data-split>Compose ton<br /><em>trio sacré.</em></h2>
+          <p class="pack__intro">
+            Un parfum star, deux coups de cœur choisis selon ton humeur. Trois flacons de 50 ml, une signature qui n'appartient qu'à toi.
+          </p>
+        </header>
+        <div class="pack__builder">
+          <div class="pack__slots" data-pack-slots>
+            <button class="slot slot--star" type="button" data-slot="0" data-cursor="Retirer">
+              <span class="slot__label">L'étoile</span>
+              <span class="slot__frame"><svg class="slot__star"><use href="#star" /></svg></span>
+              <span class="slot__name" data-slot-name>Choisis ton parfum star</span>
+            </button>
+            <button class="slot" type="button" data-slot="1" data-cursor="Retirer">
+              <span class="slot__label">Coup de cœur</span>
+              <span class="slot__frame"><svg class="slot__star"><use href="#star" /></svg></span>
+              <span class="slot__name" data-slot-name>—</span>
+            </button>
+            <button class="slot" type="button" data-slot="2" data-cursor="Retirer">
+              <span class="slot__label">Coup de cœur</span>
+              <span class="slot__frame"><svg class="slot__star"><use href="#star" /></svg></span>
+              <span class="slot__name" data-slot-name>—</span>
+            </button>
+          </div>
+          <div class="pack__picker">
+            <p class="pack__step" data-pack-step>01 — Choisis ton parfum star</p>
+            <div class="pack__chips" data-pack-chips></div>
+            <div class="pack__total">
+              <div>
+                <p class="pack__price"><s data-pack-old>—</s> <strong data-pack-price>—</strong></p>
+                <p class="pack__save">3 × 50 ml · jusqu'à −34 %</p>
+              </div>
+              <button class="btn btn--gold" type="button" data-pack-add disabled data-magnetic data-cursor="Ajouter">
+                <span class="btn__label">Ajouter le pack</span>
+                <svg class="btn__icon"><use href="#arrow" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ÉCHANTILLONS ============ -->
+      <section class="samples" id="echantillons">
+        <div class="samples__head">
+          <div class="samples__price">
+            <p class="eyebrow"><svg class="eyebrow__star"><use href="#star" /></svg> Le rituel de l'échantillon</p>
+            <p class="samples__big"><span>1,90</span><small>€</small></p>
+            <p class="samples__sub">la fiole de 2 ml</p>
+          </div>
+          <div class="samples__steps">
+            <h2 class="display display--sm" data-split>Essaie avant<br /><em>d'aimer.</em></h2>
+            <ol class="steps">
+              <li><span class="steps__n">١</span><div><h3>Choisis</h3><p>Sélectionne les sillages qui t'intriguent, autant que tu veux.</p></div></li>
+              <li><span class="steps__n">٢</span><div><h3>Porte</h3><p>Laisse-les vivre une journée sur ta peau, du matin jusqu'au soir.</p></div></li>
+              <li><span class="steps__n">٣</span><div><h3>Adopte</h3><p>Trouve ton parfum signature, puis passe au flacon.</p></div></li>
+            </ol>
+          </div>
+        </div>
+        <div class="samples__grid" data-samples></div>
+        <div class="samples__all">
+          <button class="btn btn--ghost" type="button" data-samples-all data-magnetic data-cursor="Tout">
+            <span class="btn__label">Ajouter les 8 échantillons</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ============ QUIZ ============ -->
+      <section class="quiz" id="quiz">
+        <div class="quiz__ornament" aria-hidden="true">
+          <svg viewBox="-60 -60 120 120"><use href="#star" x="-50" y="-50" width="100" height="100" /></svg>
+          <svg viewBox="-60 -60 120 120"><use href="#star" x="-50" y="-50" width="100" height="100" /></svg>
+        </div>
+        <div class="quiz__inner">
+          <p class="eyebrow"><svg class="eyebrow__star"><use href="#star" /></svg> Le guide olfactif</p>
+          <h2 class="display display--sm" data-split>Quel souffle d'Orient<br /><em>es-tu ?</em></h2>
+          <div class="quiz__card" data-quiz aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ============ JOURNAL ============ -->
+      <section class="journal" id="journal">
+        <header class="journal__head">
+          <p class="eyebrow"><svg class="eyebrow__star"><use href="#star" /></svg> Le Journal</p>
+          <h2 class="display display--sm" data-split>Histoires<br /><em>d'Orient.</em></h2>
+          <p class="journal__hint">Glisse pour lire <svg><use href="#arrow" /></svg></p>
+        </header>
+        <div class="journal__rail" data-journal data-cursor="Glisser"></div>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer" id="contact">
+      <div class="footer__dawn">
+        <p class="eyebrow"><svg class="eyebrow__star"><use href="#star" /></svg> L'aube se lève</p>
+        <h2 class="display footer__title" data-split>L'Orient<br /><em>t'attend.</em></h2>
+        <a class="btn btn--gold" href="#quiz" data-link data-magnetic data-cursor="Quiz">
+          <span class="btn__label">Trouver mon parfum</span>
+          <svg class="btn__icon"><use href="#arrow" /></svg>
+        </a>
+      </div>
+      <div class="footer__main">
+        <div class="footer__top">
+          <form class="newsletter" data-newsletter>
+            <label for="nl-email" class="newsletter__label">Rejoins le Cercle — nouveautés, éditions limitées et rituels, en avant-première.</label>
+            <div class="newsletter__row">
+              <input id="nl-email" type="email" name="email" placeholder="ton@email.com" required autocomplete="email" />
+              <button type="submit" data-cursor="Envoyer" aria-label="S'inscrire"><svg><use href="#arrow" /></svg></button>
+            </div>
+          </form>
+          <nav class="footer__cols" aria-label="Pied de page">
+            <div>
+              <p class="footer__h">Parfums</p>
+              <a href="https://www.elegance-emiratie.com/collections/parfums-elegance-emiratie" target="_blank" rel="noopener">Signature</a>
+              <a href="https://www.elegance-emiratie.com/collections/parfum-femme" target="_blank" rel="noopener">Femme</a>
+              <a href="https://www.elegance-emiratie.com/collections/parfum-homme" target="_blank" rel="noopener">Homme</a>
+              <a href="https://www.elegance-emiratie.com/collections/huiles-de-parfum" target="_blank" rel="noopener">Huiles de parfum</a>
+            </div>
+            <div>
+              <p class="footer__h">La Maison</p>
+              <a href="#packs" data-link>Packs Signature</a>
+              <a href="#echantillons" data-link>Échantillons</a>
+              <a href="#quiz" data-link>Guide olfactif</a>
+              <a href="#journal" data-link>Journal</a>
+            </div>
+            <div>
+              <p class="footer__h">Aide</p>
+              <a href="https://www.elegance-emiratie.com/policies/shipping-policy" target="_blank" rel="noopener">Livraison</a>
+              <a href="https://www.elegance-emiratie.com/policies/refund-policy" target="_blank" rel="noopener">Retours</a>
+              <a href="https://www.elegance-emiratie.com/policies/terms-of-service" target="_blank" rel="noopener">CGV</a>
+              <a href="https://www.elegance-emiratie.com/pages/contact" target="_blank" rel="noopener">Contact</a>
+            </div>
+          </nav>
+        </div>
+        <p class="footer__word" aria-label="Elegance Emiratie" data-wordmark>ELEGANCE EMIRATIE</p>
+        <div class="footer__bottom">
+          <p>© <span data-year>2026</span> Elegance Emiratie</p>
+          <p lang="ar" dir="rtl" class="footer__ar">أناقة إماراتية</p>
+          <a href="#top" data-link data-cursor="Haut">Retour en haut ↑</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============ FICHE PRODUIT ============ -->
+    <div class="panel" aria-hidden="true">
+      <div class="panel__backdrop" data-panel-close></div>
+      <section class="panel__sheet" role="dialog" aria-modal="true" aria-labelledby="panel-title" tabindex="-1">
+        <button class="panel__close" type="button" data-panel-close data-cursor="Fermer">Fermer <span aria-hidden="true">✕</span></button>
+        <div class="panel__content" data-panel-content></div>
+      </section>
+    </div>
+
+    <!-- ============ PANIER ============ -->
+    <div class="cart" aria-hidden="true">
+      <div class="cart__backdrop" data-cart-close></div>
+      <aside class="cart__sheet" role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1">
+        <header class="cart__head">
+          <h2 id="cart-title">Ton panier</h2>
+          <button type="button" class="cart__close" data-cart-close data-cursor="Fermer">Fermer <span aria-hidden="true">✕</span></button>
+        </header>
+        <div class="cart__items" data-cart-items></div>
+        <footer class="cart__foot">
+          <p class="cart__sub"><span>Sous-total</span><strong data-cart-total>0,00 €</strong></p>
+          <button class="btn btn--gold btn--block" type="button" data-checkout data-cursor="Commander">
+            <span class="btn__label">Passer commande</span>
+            <svg class="btn__icon"><use href="#arrow" /></svg>
+          </button>
+          <p class="cart__note">Paiement sécurisé</p>
+        </footer>
+      </aside>
+    </div>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
