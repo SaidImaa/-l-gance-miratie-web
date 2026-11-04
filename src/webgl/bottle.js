@@ -105,7 +105,7 @@ function makeMaterials(envIntensity = 1) {
     clearcoat: 1,
     clearcoatRoughness: 0.04,
     specularIntensity: 1,
-    envMapIntensity: 1.3 * envIntensity,
+    envMapIntensity: 1.5 * envIntensity,
     flatShading: true,
   };
   const glass = new THREE.MeshPhysicalMaterial({
@@ -119,17 +119,17 @@ function makeMaterials(envIntensity = 1) {
   const liquid = new THREE.MeshPhysicalMaterial({
     ...crystal,
     color: 0xffffff,
-    thickness: 0.75,
+    thickness: 0.9,
     attenuationColor: new THREE.Color('#b06a1c'),
-    attenuationDistance: 0.9,
+    attenuationDistance: 0.5,
     emissive: new THREE.Color('#b06a1c'),
-    emissiveIntensity: 0.28,
+    emissiveIntensity: 0.22,
   });
   const gold = new THREE.MeshStandardMaterial({
     color: new THREE.Color('#e2b66a'),
     metalness: 1,
-    roughness: 0.24,
-    envMapIntensity: 2 * envIntensity,
+    roughness: 0.26,
+    envMapIntensity: 1.5 * envIntensity,
     flatShading: true,
   });
   return { glass, liquid, gold };
@@ -180,8 +180,8 @@ export class Bottle {
       roughness: 0.28,
       transparent: true,
       envMapIntensity: 1.4 * envIntensity,
-      emissive: new THREE.Color('#5a3c12'),
-      emissiveIntensity: 0.25,
+      emissive: new THREE.Color('#c9984a'),
+      emissiveIntensity: 0.75,
       emissiveMap: this.labelTexture,
     });
     const facetW = 2 * 0.77 * Math.sin(Math.PI / SEG);
@@ -189,7 +189,19 @@ export class Bottle {
     label.position.set(0, 0.62, 0.77 * Math.cos(Math.PI / SEG) + 0.004);
     this.label = label;
 
-    holder.add(liquid, body, collar, ring, cap, gem, label);
+    // arêtes taillées : un fil de lumière sur chaque facette du cristal
+    const edgeMat = new THREE.LineBasicMaterial({
+      color: new THREE.Color('#ffe6bd'),
+      transparent: true,
+      opacity: 0.22,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    this.edgeMat = edgeMat;
+    const edges = new THREE.Group();
+    for (const g of [liquid.geometry, body.geometry]) edges.add(new THREE.LineSegments(new THREE.EdgesGeometry(g, 12), edgeMat));
+
+    holder.add(liquid, body, edges, collar, ring, cap, gem, label);
     this.meshes = { body, liquid, collar, ring, cap, gem, label };
 
     this.spin = { value: 0 };

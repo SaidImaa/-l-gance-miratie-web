@@ -29,17 +29,30 @@ export function createStudioEnvironment(renderer) {
   );
   scene.add(dome);
 
+  // bandes de lumière à bords doux : des reflets en dégradé plutôt qu'en aplat
   const strip = (w, h, color, intensity, pos, lookAt = new THREE.Vector3()) => {
-    const m = new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(intensity), side: THREE.DoubleSide });
+    const m = new THREE.ShaderMaterial({
+      side: THREE.DoubleSide,
+      uniforms: { uColor: { value: new THREE.Color(color).multiplyScalar(intensity) } },
+      vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uColor; varying vec2 vUv;
+        void main(){
+          float x = 1.0 - pow(abs(vUv.x * 2.0 - 1.0), 1.6);
+          float y = smoothstep(0.0, 0.2, vUv.y) * smoothstep(1.0, 0.8, vUv.y);
+          gl_FragColor = vec4(uColor * x * x * y, 1.0);
+        }
+      `,
+    });
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), m);
     mesh.position.copy(pos);
     mesh.lookAt(lookAt);
     scene.add(mesh);
   };
   // key gauche, long et chaud
-  strip(1.6, 14, '#ffe2b8', 7, new THREE.Vector3(-7, 1, 4));
+  strip(2.4, 14, '#ffe2b8', 4.5, new THREE.Vector3(-7, 1, 4));
   // fill droite
-  strip(1.0, 12, '#ffd29a', 4.5, new THREE.Vector3(7, 0.5, 3));
+  strip(1.8, 12, '#ffd29a', 3, new THREE.Vector3(7, 0.5, 3));
   // contre-jour ambré
   strip(10, 1.2, '#ff9a4a', 5, new THREE.Vector3(0, 2.5, -8));
   strip(1.2, 10, '#ffb36b', 3.5, new THREE.Vector3(-4, 1, -7));

@@ -20,6 +20,7 @@ Une refonte complète de [elegance-emiratie.com](https://www.elegance-emiratie.c
 ## Direction artistique
 
 - **Palette** : nuit d'ébène `#070504`, or `#d7b06a → #f7e4b3`, ambre, safran. Chaque parfum a sa couleur de jus et son accent.
+- **Calligraphie arabe en 3D** : le nom arabe de chaque souffle et de chaque parfum (عود، مسك، عنبر، ليلة الأبنوس…) s'inscrit en or derrière le flacon et se laisse réfracter par le cristal.
 - **Typographies** (auto-hébergées) : *Cormorant Garamond* pour l'éditorial, *Jost* pour l'interface, *Aref Ruqaa* et *Amiri* pour la calligraphie arabe et les chiffres arabes orientaux (١ ٢ ٣).
 - **Motif** : l'étoile à huit branches, partout : logo, loader, rosace en lévitation sous le flacon, curseur, puces, motifs de fond.
 - **Architecture** : cadres en arche (inspirés des moucharabiehs et des portes orientales) pour les visuels produits.
@@ -36,6 +37,7 @@ Une refonte complète de [elegance-emiratie.com](https://www.elegance-emiratie.c
   - l'heure avance avec le scroll : crépuscule → nuit → aube.
 - **Packshots générés en 3D** : chaque flacon et chaque fiole sont « photographiés » dans un studio virtuel au chargement, puis réutilisés dans les packs, les échantillons, le quiz et le panier. Aucune photo n'est nécessaire.
 - **Motion design** : défilement doux (Lenis), titres révélés ligne par ligne, mots du manifeste qui s'allument à la lecture, bandeau dont la vitesse suit l'élan du scroll, boutons magnétiques, curseur contextuel, menu plein écran en cercle, signature du footer qui ondule sous la souris.
+- **Ambiance sonore** (désactivée par défaut, bouton dans la barre de navigation) : vent du désert, bourdon grave et carillons sur la gamme orientale Hijaz, générés en temps réel avec la Web Audio API.
 - **E-commerce** : fiche produit (pyramide olfactive, formats 2 / 15 / 50 / 100 ml), panier persistant (localStorage), Pack Signature, échantillons.
 
 ## Lancer le projet
@@ -48,6 +50,8 @@ npm run preview  # sert dist/
 ```
 
 `dist/` est un site statique : il se déploie tel quel sur Netlify, Vercel, GitHub Pages ou un CDN (chemins relatifs).
+
+**GitHub Pages en un clic** : activer *Settings → Pages → Source : GitHub Actions*, puis lancer le workflow *Actions → « Déployer sur GitHub Pages » → Run workflow*.
 
 Paramètres d'URL utiles : `?nogl` (force le mode sans WebGL), `?debug` (expose `window.__EE`), `?instant` (désactive l'amorti de la caméra, utile pour les captures).
 

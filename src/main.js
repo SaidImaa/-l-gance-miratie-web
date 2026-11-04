@@ -42,11 +42,11 @@ const params = new URLSearchParams(location.search);
 
 const DESKTOP = {
   intro: { by: -3.4, bs: 0.55, text: 0, textY: -0.6, camZ: 10.5, camY: 1.8, lookY: 0.6, dust: 0, halo: 0, smoke: 0, rot: -TAU * 0.75, sky: 0.15 },
-  hero: { camX: 0, camY: 0.55, camZ: 7.6, lookY: 0.15, bxf: 0, by: 0.02, bz: 0, bs: 1, rot: 0, sky: 0, dunesY: -2.15, text: 1, textY: 0, dust: 1, smoke: 0.55, tintMix: 0, halo: 1, visible: 1 },
-  manifesto: { camX: 0, camY: 0.3, camZ: 6.8, lookY: 0.05, bxf: 0.24, by: 0, bz: 0, bs: 1, rot: -TAU, sky: 0.6, dunesY: -2.7, text: 0, textY: 2.6, dust: 1.2, smoke: 0.85, tintMix: 0, halo: 0.6, visible: 1 },
-  souffles: { camX: 0, camY: 0.2, camZ: 6.5, lookY: 0, bxf: 0.25, by: -0.05, bz: 0.2, bs: 1.06, rot: -TAU * 2, sky: 1, dunesY: -3.4, text: 0, textY: 2.6, dust: 1.3, smoke: 1, tintMix: 0.62, halo: 0.85, visible: 1 },
-  collection: { camX: 0, camY: 0.22, camZ: 7.0, lookY: 0.02, bxf: -0.25, by: -0.06, bz: 0, bs: 1.04, rot: -TAU * 3, sky: 1, dunesY: -3.0, text: 0, textY: 2.6, dust: 0.9, smoke: 0.5, tintMix: 0.38, halo: 1, visible: 1 },
-  dawn: { camX: 0, camY: 0.75, camZ: 8.6, lookY: 0.55, bxf: 0, by: 0.7, bz: -0.4, bs: 0.78, rot: -TAU * 4, sky: 2, dunesY: -1.95, text: 0, textY: 2.6, dust: 0.8, smoke: 0.25, tintMix: 0, halo: 1, visible: 1 },
+  hero: { camX: 0, camY: 0.55, camZ: 7.6, lookY: 0.15, bxf: 0, by: 0.02, bz: 0, bs: 1, rot: 0, sky: 0, dunesY: -2.15, text: 1, textY: 0, glyph: 0, dust: 1, smoke: 0.55, tintMix: 0, halo: 1, visible: 1 },
+  manifesto: { camX: 0, camY: 0.3, camZ: 6.8, lookY: 0.05, bxf: 0.24, by: 0, bz: 0, bs: 1, rot: -TAU, sky: 0.6, dunesY: -2.7, text: 0, textY: 2.6, glyph: 0, dust: 1.2, smoke: 0.85, tintMix: 0, halo: 0.6, visible: 1 },
+  souffles: { camX: 0, camY: 0.2, camZ: 6.5, lookY: 0, bxf: 0.25, by: -0.05, bz: 0.2, bs: 1.06, rot: -TAU * 2, sky: 1, dunesY: -3.4, text: 0, textY: 2.6, glyph: 0.85, dust: 1.3, smoke: 1, tintMix: 0.62, halo: 0.85, visible: 1 },
+  collection: { camX: 0, camY: 0.22, camZ: 7.0, lookY: 0.02, bxf: -0.25, by: 0.08, bz: 0, bs: 1.04, rot: -TAU * 3, sky: 1, dunesY: -3.0, text: 0, textY: 2.6, glyph: 0.55, dust: 0.9, smoke: 0.5, tintMix: 0.38, halo: 1, visible: 1 },
+  dawn: { camX: 0, camY: 0.75, camZ: 8.6, lookY: 0.55, bxf: 0, by: -0.35, bz: -0.4, bs: 0.72, rot: -TAU * 4, sky: 2, dunesY: -1.95, text: 0, textY: 2.6, glyph: 0, dust: 0.8, smoke: 0.25, tintMix: 0, halo: 1, visible: 1 },
 };
 
 const MOBILE = {
@@ -55,7 +55,7 @@ const MOBILE = {
   manifesto: { ...DESKTOP.manifesto, bxf: 0, by: 1.3, bs: 0.72, camZ: 8 },
   souffles: { ...DESKTOP.souffles, bxf: 0, by: 1.25, bs: 0.82, camZ: 7.6 },
   collection: { ...DESKTOP.collection, bxf: 0, by: 1.4, bs: 0.6, camZ: 8 },
-  dawn: { ...DESKTOP.dawn, by: 0.9, camZ: 9.4 },
+  dawn: { ...DESKTOP.dawn, by: -0.4, camZ: 9.4 },
 };
 
 /* ------------------------------------------------------------------------ */
@@ -233,13 +233,13 @@ async function boot() {
   lookOf = () => {
     if (section === 'souffles') {
       const s = SOUFFLES[chapterIdx];
-      return { perfume: byId(s.perfumes[0]), tint: s.tint, dust: '#ffcf7a' };
+      return { perfume: byId(s.perfumes[0]), tint: s.tint, dust: '#ffcf7a', glyph: s.ar };
     }
     if (section === 'collection') {
       const p = byId(activeId);
-      return { perfume: p, tint: p.liquid, dust: p.accent };
+      return { perfume: p, tint: p.liquid, dust: p.accent, glyph: p.ar };
     }
-    return { perfume: SIGNATURE, tint: '#2b1408', dust: '#ffcf7a' };
+    return { perfume: SIGNATURE, tint: '#2b1408', dust: '#ffcf7a', glyph: '' };
   };
   const applyLook = (look) => look && world?.setLook(look);
   const setSection = (name) => {
@@ -330,30 +330,24 @@ async function boot() {
     numEl.textContent = arabicNum(next + 1);
     dots.forEach((d, i) => d.classList.toggle('is-active', i === next));
 
-    gsap.killTweensOf(prevEl.querySelectorAll('[data-anim], .char, .chapter__ar'));
+    gsap.killTweensOf(prevEl.querySelectorAll('[data-anim], .char'));
     gsap.to(prevEl.querySelectorAll('[data-anim]'), { yPercent: -40 * dir, opacity: 0, duration: 0.5, stagger: 0.03, ease: 'power3.in' });
-    gsap.to(prevEl.querySelectorAll('.char'), { yPercent: -110 * dir, opacity: 0, duration: 0.5, stagger: 0.02, ease: 'power3.in' });
-    gsap.to(prevEl.querySelector('.chapter__ar'), {
+    gsap.to(prevEl.querySelectorAll('.char'), {
+      yPercent: -110 * dir,
       opacity: 0,
-      scale: 0.9,
-      filter: 'blur(12px)',
-      duration: 0.7,
-      ease: 'power2.in',
+      duration: 0.5,
+      stagger: 0.02,
+      ease: 'power3.in',
       onComplete: () => chapterIdx !== prevIdx && prevEl.classList.remove('is-active'),
     });
 
     nextEl.classList.add('is-active');
-    gsap.killTweensOf(nextEl.querySelectorAll('[data-anim], .char, .chapter__ar'));
+    gsap.killTweensOf(nextEl.querySelectorAll('[data-anim], .char'));
     gsap.fromTo(nextEl.querySelectorAll('[data-anim]'), { yPercent: 40 * dir, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1, stagger: 0.06, delay: 0.3, ease: 'power3.out' });
     gsap.fromTo(
       nextEl.querySelectorAll('.char'),
       { yPercent: 110 * dir, rotateX: -60 * dir, opacity: 0 },
       { yPercent: 0, rotateX: 0, opacity: 1, duration: 1.2, stagger: 0.04, delay: 0.25, ease: 'expo.out' }
-    );
-    gsap.fromTo(
-      nextEl.querySelector('.chapter__ar'),
-      { opacity: 0, scale: 1.2, filter: 'blur(24px)' },
-      { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.8, delay: 0.1, ease: 'expo.out' }
     );
     audio.chime(next * 2 + 1);
     if (section === 'souffles' && !product.isOpen) applyLook(lookOf());
@@ -376,7 +370,6 @@ async function boot() {
   });
 
   // --- collection
-  const stageAr = document.querySelector('[data-stage-ar]');
   const stageRing = document.querySelector('[data-stage-ring]');
   const stageFamily = document.querySelector('[data-stage-family]');
   const swapText = (el, text) => {
@@ -397,7 +390,6 @@ async function boot() {
     activeId = id;
     const p = byId(id);
     rows.forEach((r) => r.classList.toggle('is-active', r.dataset.perfume === id));
-    swapText(stageAr, p.ar);
     swapText(stageFamily, p.family);
     swapText(stageRing, ringText(p));
     if (section === 'collection' && !product.isOpen) applyLook(lookOf());
@@ -428,6 +420,7 @@ async function boot() {
       opacity: 0,
       duration: 1.2,
       ease: 'expo.out',
+      clearProps: 'transform,opacity',
       scrollTrigger: { trigger: r, start: 'top 92%', once: true },
     })
   );
@@ -450,7 +443,7 @@ async function boot() {
   reveal('.samples__big', '.samples__head', { y: 120, duration: 1.6, ease: 'expo.out' });
   reveal('.quiz__card', '.quiz__card', { y: 80, scale: 0.96 });
   reveal('.article', '.journal__rail', { x: 120, y: 0, stagger: 0.1 });
-  reveal(wordChars, '.footer__word', { yPercent: 100, y: 0, stagger: 0.03, duration: 1.4, ease: 'expo.out' });
+  reveal(wordChars, '.footer__word', { yPercent: 100, y: 0, stagger: 0.03, duration: 1.4, ease: 'expo.out', clearProps: 'transform' });
   reveal('.footer__cols > div, .newsletter', '.footer__top');
 
   gsap.to('.quiz__ornament', {

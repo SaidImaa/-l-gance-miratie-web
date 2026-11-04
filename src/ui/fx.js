@@ -62,12 +62,14 @@ export function initMarquee(getVelocity) {
   let x = 0;
   let dir = -1;
   let skew = 0;
+  let half = track.scrollWidth / 2;
+  window.addEventListener('resize', () => (half = track.scrollWidth / 2));
+  document.fonts?.ready.then(() => (half = track.scrollWidth / 2));
   gsap.ticker.add((_, dt) => {
     const v = getVelocity();
     if (Math.abs(v) > 0.5) dir = v > 0 ? -1 : 1;
     const speed = 60 + Math.min(Math.abs(v) * 30, 900);
     x += dir * speed * (dt / 1000);
-    const half = track.scrollWidth / 2;
     if (half > 0) {
       if (x <= -half) x += half;
       if (x > 0) x -= half;

@@ -75,7 +75,7 @@ export function createProductPanel({ thumbs, cart, director, world, lenis, onClo
     render(p);
     sheet.scrollTop = 0;
     if (open) {
-      world?.setLook({ perfume: p, tint: p.liquid, dust: p.accent });
+      world?.setLook({ perfume: p, tint: p.liquid, dust: p.accent, glyph: p.ar });
       gsap.fromTo(content.firstElementChild.children, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: 'power3.out' });
       return;
     }
@@ -89,9 +89,9 @@ export function createProductPanel({ thumbs, cart, director, world, lenis, onClo
       document.body.classList.add('is-panel');
       director.override({
         bxf: -0.24, by: 0, bz: 0, bs: 1.12, camZ: 6.3, camY: 0.2, lookY: 0,
-        text: 0, tintMix: 0.55, visible: 1, halo: 1, dust: 1.1, smoke: 0.7,
+        text: 0, glyph: 0.6, tintMix: 0.55, visible: 1, halo: 1, dust: 1.1, smoke: 0.7,
       });
-      world.setLook({ perfume: p, tint: p.liquid, dust: p.accent });
+      world.setLook({ perfume: p, tint: p.liquid, dust: p.accent, glyph: p.ar });
     }
 
     gsap.fromTo(sheet, { xPercent: 100 }, { xPercent: 0, duration: 1.1, ease: 'expo.out' });

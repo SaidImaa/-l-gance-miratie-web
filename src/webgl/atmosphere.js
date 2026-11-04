@@ -229,3 +229,64 @@ export function createHeroText() {
   const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, H / W), mat);
   return { mesh, material: mat, draw, aspect: H / W };
 }
+
+/**
+ * Calligraphie arabe monumentale derrière le flacon (chapitres, parfums).
+ */
+export function createGlyphText() {
+  const W = 2048;
+  const H = 1024;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  let current = '';
+
+  const draw = (text) => {
+    current = text;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, W, H);
+    if (!text) {
+      tex.needsUpdate = true;
+      return;
+    }
+    let size = text.length > 4 ? 520 : 700;
+    ctx.direction = 'rtl';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = `400 ${size}px "Aref Ruqaa", "Amiri", serif`;
+    while (ctx.measureText(text).width > W * 0.84 && size > 120) {
+      size -= 20;
+      ctx.font = `400 ${size}px "Aref Ruqaa", "Amiri", serif`;
+    }
+    const g = ctx.createLinearGradient(0, H * 0.15, W, H * 0.85);
+    g.addColorStop(0, '#8a6229');
+    g.addColorStop(0.35, '#f3d79e');
+    g.addColorStop(0.55, '#b88a43');
+    g.addColorStop(0.8, '#fbe7bb');
+    g.addColorStop(1, '#8a6229');
+    // voile doré très léger + trait d'or : une calligraphie gravée dans la nuit
+    ctx.globalAlpha = 0.16;
+    ctx.fillStyle = g;
+    ctx.fillText(text, W / 2, H * 0.52);
+    ctx.globalAlpha = 1;
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = g;
+    ctx.strokeText(text, W / 2, H * 0.52);
+    tex.needsUpdate = true;
+  };
+
+  const material = new THREE.MeshBasicMaterial({
+    map: tex,
+    transparent: false,
+    alphaToCoverage: true,
+    depthWrite: false,
+    opacity: 0,
+    toneMapped: false,
+  });
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 1), material);
+  return { mesh, material, draw, get text() { return current; } };
+}

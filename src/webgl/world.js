@@ -7,13 +7,13 @@ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { createSky } from './sky.js';
 import { createDunes } from './dunes.js';
-import { createDust, createSmoke, createHalo, createHeroText } from './atmosphere.js';
+import { createDust, createSmoke, createHalo, createHeroText, createGlyphText } from './atmosphere.js';
 import { Bottle } from './bottle.js';
 import { createStudioEnvironment } from './env.js';
 
 export const SCENE_KEYS = [
   'camX', 'camY', 'camZ', 'lookY', 'bxf', 'by', 'bz', 'bs', 'rot', 'sky',
-  'dunesY', 'text', 'textY', 'dust', 'smoke', 'tintMix', 'halo', 'visible',
+  'dunesY', 'text', 'textY', 'glyph', 'dust', 'smoke', 'tintMix', 'halo', 'visible',
 ];
 
 const FinalShader = {
@@ -91,6 +91,14 @@ export class World {
     }
     scene.add(this.heroText.mesh);
 
+    this.glyph = createGlyphText();
+    this.glyphFade = { v: 0 };
+    if (this.lowPower) {
+      this.glyph.material.alphaToCoverage = false;
+      this.glyph.material.alphaTest = 0.5;
+    }
+    scene.add(this.glyph.mesh);
+
     this.smoke = createSmoke(this.lowPower ? 2 : 4);
     scene.add(this.smoke.group);
 
@@ -107,7 +115,7 @@ export class World {
     key.position.set(3, 5, 6);
     const rim = new THREE.DirectionalLight('#ff9a4c', 3.2);
     rim.position.set(-4, 2.5, -5);
-    this.spot = new THREE.PointLight('#ffcf8a', 6, 12, 1.6);
+    this.spot = new THREE.PointLight('#ffcf8a', 4, 12, 1.6);
     this.spot.position.set(2, 1.5, 3);
     scene.add(key, rim, this.spot);
 
@@ -120,7 +128,7 @@ export class World {
     this.composer = new EffectComposer(renderer, rt);
     this.composer.addPass(new RenderPass(scene, camera));
     if (!this.lowPower) {
-      this.bloom = new UnrealBloomPass(new THREE.Vector2(size.w, size.h), 0.45, 0.7, 0.86);
+      this.bloom = new UnrealBloomPass(new THREE.Vector2(size.w, size.h), 0.42, 0.7, 0.9);
       this.composer.addPass(this.bloom);
     }
     this.finalPass = new ShaderPass(FinalShader);
@@ -169,9 +177,23 @@ export class World {
     }
   }
 
-  /** Ambiance : couleur du jus, teinte du ciel, poussière. */
-  setLook({ perfume, tint, dust }, { spin = true } = {}) {
+  /** Ambiance : couleur du jus, teinte du ciel, poussière, calligraphie. */
+  setLook({ perfume, tint, dust, glyph }, { spin = true } = {}) {
     if (perfume) this.bottle.setPerfume(perfume, { spin });
+    if (glyph !== undefined && glyph !== this.glyph.text && glyph !== this.pendingGlyph) {
+      this.pendingGlyph = glyph;
+      gsap.to(this.glyphFade, {
+        v: 0,
+        duration: this.glyphFade.v > 0.01 ? 0.45 : 0.01,
+        ease: 'power2.in',
+        overwrite: true,
+        onComplete: () => {
+          this.glyph.draw(this.pendingGlyph);
+          this.pendingGlyph = null;
+          gsap.to(this.glyphFade, { v: 1, duration: 1.4, ease: 'power2.out' });
+        },
+      });
+    }
     if (tint) {
       const c = new THREE.Color(tint);
       gsap.to(this.tint, { r: c.r, g: c.g, b: c.b, duration: 1.4, ease: 'power2.inOut', overwrite: true });
@@ -249,6 +271,16 @@ export class World {
     this.heroText.mesh.scale.set(tw, tw, 1);
     this.heroText.material.opacity = cur.text;
     this.heroText.mesh.visible = cur.text > 0.003;
+
+    // calligraphie derrière le flacon
+    const gz = -2.4;
+    const gw = 2.5 * cur.bs * mobileScale;
+    const gx = (bx * (cur.camZ - gz)) / Math.max(0.1, dist);
+    this.glyph.mesh.position.set(gx, by + 0.25, gz);
+    this.glyph.mesh.scale.set(gw, gw, 1);
+    const go = cur.glyph * this.glyphFade.v;
+    this.glyph.material.opacity = go;
+    this.glyph.mesh.visible = go > 0.003;
 
     // ciel & dunes
     this.sky.mesh.position.copy(cam.position);

@@ -19,7 +19,6 @@ export function buildSouffles() {
   wrap.innerHTML = SOUFFLES.map(
     (s, i) => `
     <article class="chapter${i === 0 ? ' is-active' : ''}" data-key="${s.key}" aria-label="${s.title}">
-      <p class="chapter__ar" lang="ar" aria-hidden="true">${s.ar}</p>
       <div class="chapter__body">
         <p class="chapter__kicker" data-anim><b>${s.numeral}</b>${s.kicker}</p>
         <h3 class="chapter__title" data-title>${s.title}</h3>
@@ -363,6 +362,17 @@ export function buildWordmark() {
     .map((c, i) => `<span class="ch${c === ' ' ? ' is-space' : ''}" aria-hidden="true" style="background-position:${(i / text.length) * 100}% 0">${c === ' ' ? '' : c}</span>`)
     .join('');
   const chars = [...el.querySelectorAll('.ch')];
+  // ajuste la taille pour occuper exactement la largeur
+  const fit = () => {
+    el.style.fontSize = '';
+    const base = parseFloat(getComputedStyle(el).fontSize);
+    const natural = chars.reduce((w, c) => w + c.getBoundingClientRect().width, 0);
+    const room = el.clientWidth;
+    if (natural > 0 && room > 0) el.style.fontSize = `${(base * room * 0.97) / natural}px`;
+  };
+  fit();
+  window.addEventListener('resize', fit);
+  document.fonts?.ready.then(fit);
   el.addEventListener('pointermove', (e) => {
     chars.forEach((c) => {
       const r = c.getBoundingClientRect();

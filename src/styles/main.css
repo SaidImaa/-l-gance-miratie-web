@@ -66,6 +66,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: lining-nums;
   overflow-x: clip;
 }
 
@@ -589,6 +590,7 @@ main,
 .nav__quiz,
 .nav__cart {
   position: relative;
+  white-space: nowrap;
   font-size: 0.68rem;
   font-weight: 400;
   letter-spacing: 0.24em;
@@ -1412,7 +1414,7 @@ main,
 
 .stage {
   position: relative;
-  width: min(40vw, 78vh);
+  width: min(46vw, 90vh);
   aspect-ratio: 1;
   display: grid;
   place-items: center;
@@ -1456,7 +1458,7 @@ main,
 
 .stage__family {
   position: absolute;
-  bottom: 2%;
+  top: -1%;
   font-family: var(--serif);
   font-style: italic;
   font-size: 1.3rem;
@@ -2084,7 +2086,6 @@ main,
   background: rgba(14, 9, 7, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  min-height: 420px;
   display: grid;
   align-content: start;
   gap: 2rem;
@@ -2277,6 +2278,7 @@ main,
   padding: 0 var(--gutter) 1rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
   scrollbar-width: none;
   cursor: grab;
   overscroll-behavior-x: contain;
@@ -2401,20 +2403,19 @@ main,
 /* ----------------------------------------------------------------------- */
 
 .footer__dawn {
-  min-height: 110vh;
+  min-height: 115vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   text-align: center;
   gap: 2rem;
-  padding: 18vh var(--gutter) 0;
+  padding: 14vh var(--gutter) 0;
   background: linear-gradient(180deg, var(--ink) 0%, rgba(7, 5, 4, 0) 26%);
 }
 
 .footer__title {
   font-size: clamp(3.6rem, 10vw, 12rem);
-  text-shadow: 0 10px 60px rgba(40, 20, 10, 0.4);
 }
 
 .footer__main {
@@ -2527,12 +2528,14 @@ main,
   justify-content: space-between;
   font-family: var(--serif);
   font-weight: 300;
-  font-size: 11.6vw;
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-  padding: 6vh 0 3vh;
+  font-size: 8vw;
+  line-height: 1;
+  letter-spacing: 0;
+  padding: 8vh 0 2vh;
+  margin-bottom: 2vh;
   white-space: nowrap;
   user-select: none;
+  overflow: clip;
 }
 
 .footer__word .ch {
@@ -3116,7 +3119,7 @@ main,
 /* Responsive                                                               */
 /* ----------------------------------------------------------------------- */
 
-@media (max-width: 1180px) {
+@media (max-width: 1260px) {
   .nav__links {
     display: none;
   }
@@ -3355,6 +3358,10 @@ main,
 }
 
 @media (max-width: 560px) {
+  .footer__word {
+    padding-top: 4vh;
+  }
+
   .btn {
     padding: 1rem 1.3rem;
     font-size: 0.66rem;
@@ -3389,10 +3396,6 @@ main,
 
   .pp__facts {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .footer__word {
-    font-size: 11vw;
   }
 
   .toast {
