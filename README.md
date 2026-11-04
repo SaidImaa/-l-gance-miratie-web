@@ -4,6 +4,10 @@
 
 Une refonte complète de [elegance-emiratie.com](https://www.elegance-emiratie.com), maison française de parfums orientaux (oud, musc, ambre) et d'inspirations de haute parfumerie. Le site raconte **une nuit dans le désert** : on arrive au crépuscule, on traverse la nuit étoilée, on repart à l'aube.
 
+## Sources
+
+Les noms des parfums, leurs notes, les formats (2 / 15 / 50 / 100 ml), le prix des échantillons et du 15 ml, les Packs Signature et les titres du journal proviennent des pages publiques de elegance-emiratie.com. Les liens « Voir sur la boutique » pointent vers les vraies fiches produits.
+
 ## L'ADN conservé, puis amplifié
 
 | ADN d'origine | Ce qu'il devient |
@@ -36,6 +40,7 @@ Une refonte complète de [elegance-emiratie.com](https://www.elegance-emiratie.c
   - post-production : bloom, aberration chromatique, vignettage ;
   - l'heure avance avec le scroll : crépuscule → nuit → aube.
 - **Packshots générés en 3D** : chaque flacon et chaque fiole sont « photographiés » dans un studio virtuel au chargement, puis réutilisés dans les packs, les échantillons, le quiz et le panier. Aucune photo n'est nécessaire.
+- **Horloge du voyage** : un petit cadran avance de 18 h 40 à 6 h 20 au fil du scroll (crépuscule, nuit, aube).
 - **Motion design** : défilement doux (Lenis), titres révélés ligne par ligne, mots du manifeste qui s'allument à la lecture, bandeau dont la vitesse suit l'élan du scroll, boutons magnétiques, curseur contextuel, menu plein écran en cercle, signature du footer qui ondule sous la souris.
 - **Ambiance sonore** (désactivée par défaut, bouton dans la barre de navigation) : vent du désert, bourdon grave et carillons sur la gamme orientale Hijaz, générés en temps réel avec la Web Audio API.
 - **E-commerce** : fiche produit (pyramide olfactive, formats 2 / 15 / 50 / 100 ml), panier persistant (localStorage), Pack Signature, échantillons.
